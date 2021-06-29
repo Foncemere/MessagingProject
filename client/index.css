@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+* {
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+html,
+body {
+  overflow: hidden;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* background-image: linear-gradient(to bottom right, #9890e3, #b1f4cf); */
+  /* dark color */
+  /* background-image: linear-gradient(to bottom right, #380036, #0cbaba); */
+  background: linear-gradient(
+      217deg,
+      rgba(248, 223, 190, 0.8),
+      rgba(218, 218, 218, 0) 70.71%
+    ),
+    linear-gradient(
+      127deg,
+      rgba(238, 188, 227, 0.8),
+      rgba(250, 206, 156, 0) 70.71%
+    ),
+    linear-gradient(
+      336deg,
+      rgba(154, 242, 253, 0.8),
+      rgba(154, 242, 253, 0) 70.71%
+    );
+
+  background-repeat: no-repeat;
+}
+
+.wrapper {
+  margin: auto;
+  height: inherit;
+  width: 75vw;
+  height: 85vh;
+  display: grid;
+  grid-template-rows: 1fr minmax(65px, auto);
+  /* background-color: rgb(0, 0, 0, 0.1); */
+  box-shadow: inset 0 0 0, 0px 10px 30px rgba(114, 114, 114, 0.2);
+  border-radius: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.wrapper:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  border-radius: 20px;
+  background-image: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.wrapper-inner {
+  border-radius: 20px;
+  border: 2px rgba(255, 255, 255, 0.3) solid;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-width: 0px;
+}
+
+.header {
+  text-align: center;
+  padding: 30px;
+  color: white;
+  font-size: 45px;
+  letter-spacing: 1px;
+  font-family: "Raleway", sans-serif;
+}
+.message-area {
+  width: 100%;
+  display: grid;
+  padding: 10px;
+  padding-top: 20px;
+  overflow-y: auto;
+}
+.message-area .wrapper-message {
+  width: 100%;
+  display: block;
+}
+.message-area .wrapper-message .message {
+  margin: 15px;
+  margin-top: 1px;
+  padding: 15px;
+  border: 2px rgba(255, 255, 255, 0.3) solid;
+  border-radius: 20px;
+  font-size: 16px;
+  max-width: 70%;
+  width: fit-content;
+  color: #2c2c2c;
+  word-wrap: break-word;
+}
+.message-area .wrapper-message .message.user {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-bottom-left-radius: 0;
+}
+
+.message-area .wrapper-message .message.you {
+  background-color: rgba(255, 255, 255, 0.7);
+  float: right;
+  border-bottom-right-radius: 0;
+}
+
+.wrapper-message .username {
+  width: 100%;
+  padding-left: 20px;
+  color: #666666;
+  font-size: 12px;
+  margin-bottom: 3px;
+}
+
+.wrapper-message .username.you {
+  text-align: right;
+  padding-right: 20px;
+}
+
+.typing-area {
+  border: 0;
+  display: grid;
+  /* fr = fraction, the next element has minmax, minimum of 65px, 
+  so the first element becomes dynamic and can shrink if
+  the second element grows */
+  grid-template-columns: 1fr minmax(65px auto);
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.typing-area .send-button {
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 5px;
+  cursor: pointer;
+}
+.typing-area .typing-box {
+  width: auto;
+  height: auto;
+  margin: auto 0;
+  margin-left: 20px;
+  cursor: text;
+  padding: 10px;
+  color: #212121;
+  overflow-wrap: break-word;
+  overflow-x: hidden;
+  display: block;
+}
+
+[contenteditable] {
+  outline: 0px solid transparent;
+}
+
+[placeholder]:empty::before {
+  content: attr(placeholder);
+  background-image: linear-gradient(to right, #c656ca, #909bf7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+}
+
+[placeholder]:empty:focus::before {
+  content: "";
+}
