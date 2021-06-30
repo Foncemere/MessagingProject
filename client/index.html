@@ -2,6 +2,8 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" type="text/css" href="index.css" />
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- this is not running under, relative to browser not local file -->
   </head>
   <body>
     <div class="header">The Chat Room</div>
@@ -35,4 +37,6 @@
       </div>
     </div>
   </body>
+  <!-- has to be bottom because need to load stuff first (querySelector) -->
+  <script src="/server/serverScript.js"></script>
 </html>
