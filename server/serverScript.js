@@ -8,5 +8,4 @@ form.addEventListener("keydown", function (e) {
     socket.emit("chat message", form.textContent);
   }
 });
-console.log("Wtf");
 console.log("KEYS", Object.keys(socket));
