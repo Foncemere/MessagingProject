@@ -71,6 +71,8 @@ body {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-bottom-width: 0px;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .header {
@@ -86,7 +88,6 @@ body {
   display: grid;
   padding: 10px;
   padding-top: 20px;
-  overflow-y: auto;
 }
 .message-area .wrapper-message {
   width: 100%;
@@ -101,6 +102,8 @@ body {
   font-size: 16px;
   max-width: 70%;
   width: fit-content;
+  width: -moz-fit-content;
+
   color: #2c2c2c;
   word-wrap: break-word;
 }
