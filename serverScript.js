@@ -7,13 +7,20 @@ const io = new Server(server);
 
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
+  io.emit("displayConnectedUser", socket.id);
+
+  //when the person disconnects, perform this function
   socket.on("disconnect", () => {
     console.log(`${socket.id} disconnected`);
+    io.emit("displayDisconnectedUser", socket.id);
   });
 
+  //when person chats, perform this action
+  //this is the catcher of that event on the river
   socket.on("chat message", (msg) => {
     console.log("FROM CLIENT");
-    io.emit("chat message", {
+    //this is just a name/string/identifier
+    io.emit("broadcast message", {
       msg,
       id: socket.id,
     });
@@ -21,18 +28,17 @@ io.on("connection", (socket) => {
 });
 
 //for the css static
+// __dirname is where the nodemon started
 app.use(express.static(__dirname + "/client"));
-// app.use("/client", express.static(__dirname + "/client"));
-//app.use(express.static(__dirname + "/server"));
 
-console.log("__dirname", __dirname);
-
-// first parameter is where the nodemon started
-//dirname is needed
-app.use("/server", express.static(__dirname + "/server"));
-
+//first parameter localhost:3000/
 app.get("/", function (req, res) {
   //./ means current directory
+
+  //// You're telling it to 'server'/return the index.html file
+  //// with the localfolder `./client` as it's root
+  //// so any files within the ./client folder can be accessed relatively;
+  //// i.e. `/index.css` -> localhost:3000/index.css => ./client/index.css
   res.sendFile("index.html", { root: "./client" });
 });
 
