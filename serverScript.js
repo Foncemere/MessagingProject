@@ -5,9 +5,21 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+async function waitForIds() {
+  try {
+    console.log("calling ids");
+    const ids = await io.allSockets();
+    return ids;
+  } catch (e) {
+    console.log("error in getting ids");
+  }
+}
+
 io.on("connection", (socket) => {
   console.log(`${socket.id} connected`);
-  io.emit("displayConnectedUser", socket.id);
+  const idsGiven = waitForIds();
+  console.log(idsGiven);
+  io.emit("displayConnectedUser", { id: socket.id, idsGiven });
 
   //when the person disconnects, perform this function
   socket.on("disconnect", () => {
@@ -22,6 +34,13 @@ io.on("connection", (socket) => {
     //this is just a name/string/identifier
     io.emit("broadcast message", {
       msg,
+      id: socket.id,
+    });
+  });
+
+  socket.on("image", (img) => {
+    io.emit("send image", {
+      img,
       id: socket.id,
     });
   });

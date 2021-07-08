@@ -3,24 +3,46 @@
   <head>
     <link rel="stylesheet" type="text/css" href="index.css" />
     <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="/socket.io-stream.js"></script> -->
     <!-- this is not running under, relative to browser not local file -->
   </head>
   <body>
     <div class="header">The Chat Room</div>
-    <div class="wrapper">
-      <div class="wrapper-inner">
-        <div class="message-area"></div>
-        <!-- flex direction row -->
+    <div class="parent-wrapper">
+      <div class="side-menu">
+        <div class="palette-selector">
+          <div class="swatch one" onclick="lightmode()"></div>
+          <div class="swatch two" onclick="darkmode()"></div>
+        </div>
       </div>
-      <div class="typing-area">
-        <div
-          class="typing-box"
-          contenteditable="TRUE"
-          placeholder="Type something..."
-        ></div>
-        <!-- <img class="send-button" src="send.png"></img> -->
+      <div class="wrapper">
+        <div class="wrapper-inner">
+          <div class="message-area">
+            <!-- <div class="wrapper-message">
+            <div class="username you">you</div>
+              <img
+                class="image"
+                src="aquarius.png"
+                onclick="window.open(this.src, '_blank');"
+              />
+          </div> -->
+        </div>
+        </div>
+        <div class="typing-ui">
+          <div class="image-preview"></div>
+          <div class="typing-area">
+            <div
+              class="typing-box"
+              contenteditable="TRUE"
+              placeholder="Type something..."
+            ></div>
+            <img class="send-button" src="send.svg"></img>
+          </div>
+          <!-- <img class="send-button" src="send.png"></img> -->
+        </div>
       </div>
     </div>
+
   </body>
   <!-- has to be bottom because need to load stuff first (querySelector) -->
   <!-- consts and let can be shared, so no need to instantiate again -->

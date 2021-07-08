@@ -7,7 +7,7 @@
 }
 html,
 body {
-  overflow: hidden;
+  overflow: auto;
   font-size: 18px;
   margin: 0;
   padding: 0;
@@ -15,7 +15,7 @@ body {
   /* background-image: linear-gradient(to bottom right, #9890e3, #b1f4cf); */
   /* dark color */
   /* background-image: linear-gradient(to bottom right, #380036, #0cbaba); */
-  background: linear-gradient(
+  background-image: linear-gradient(
       217deg,
       rgba(248, 223, 190, 0.8),
       rgba(218, 218, 218, 0) 70.71%
@@ -27,15 +27,25 @@ body {
     ),
     linear-gradient(
       336deg,
-      rgba(154, 242, 253, 0.8),
-      rgba(154, 242, 253, 0) 70.71%
+      rgba(183, 242, 250, 0.8),
+      rgba(183, 242, 250, 0) 70.71%
     );
 
   background-repeat: no-repeat;
 }
+.parent-wrapper {
+  display: flex;
+  justify-content: space-around;
+}
+
+.side-menu {
+  min-width: 90px;
+  max-width: inherit;
+  height: inherit;
+}
 
 .wrapper {
-  margin: auto;
+  margin: 10px;
   height: inherit;
   width: 75vw;
   height: 85vh;
@@ -76,7 +86,7 @@ body {
 }
 
 .header {
-  text-align: center;
+  text-align: left;
   padding: 30px;
   color: white;
   font-size: 45px;
@@ -131,7 +141,34 @@ body {
   padding-right: 20px;
 }
 
-.typing-area {
+.image {
+  margin: 1px;
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  border-collapse: separate;
+}
+
+.image.you {
+  float: right;
+}
+
+.prepped-image {
+  height: 150px;
+  width: 150px;
+  padding: 5px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.images-container {
+  margin-left: 10px;
+}
+
+.typing-ui {
   border: 0;
   display: grid;
   /* fr = fraction, the next element has minmax, minimum of 65px, 
@@ -146,15 +183,21 @@ body {
   max-height: 200px;
   overflow-y: auto;
 }
-.typing-area .send-button {
-  height: 30px;
+
+.typing-area {
+  display: grid;
+  grid-template-columns: auto 40px;
+}
+
+.typing-ui .send-button {
+  height: 35px;
   display: flex;
   justify-content: center;
   margin: auto;
   padding: 5px;
   cursor: pointer;
 }
-.typing-area .typing-box {
+.typing-ui .typing-box {
   width: auto;
   height: auto;
   margin: auto 0;
@@ -174,6 +217,31 @@ body {
   padding-bottom: 5px;
   font-size: 12px;
   color: #666666;
+}
+.palette-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 5px;
+  align-items: center;
+}
+.palette-selector .swatch {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 2px solid #ffffff;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.palette-selector .swatch.one:hover {
+  transition: 0.2s linear;
+  background-color: #f5f5f5;
+}
+
+.palette-selector .swatch.two:hover {
+  transition: 0.2s linear;
+  background-color: #313131;
 }
 
 [contenteditable] {
