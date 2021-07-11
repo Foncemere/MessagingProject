@@ -15,16 +15,20 @@ async function waitForIds() {
   }
 }
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
+  const idsGiven = await waitForIds();
   console.log(`${socket.id} connected`);
-  const idsGiven = waitForIds();
-  console.log(idsGiven);
-  io.emit("displayConnectedUser", { id: socket.id, idsGiven });
+  //idsGiven is in Set, use spread operator
+  io.emit("displayConnectedUser", { id: socket.id, idsGiven: [...idsGiven] });
 
   //when the person disconnects, perform this function
-  socket.on("disconnect", () => {
+  socket.on("disconnect", async () => {
+    const idsGiven = await waitForIds();
     console.log(`${socket.id} disconnected`);
-    io.emit("displayDisconnectedUser", socket.id);
+    io.emit("displayDisconnectedUser", {
+      id: socket.id,
+      idsGiven: [...idsGiven],
+    });
   });
 
   //when person chats, perform this action

@@ -6,26 +6,17 @@
     <!-- <script src="/socket.io-stream.js"></script> -->
     <!-- this is not running under, relative to browser not local file -->
   </head>
-  <body>
+  <body class="body">
     <div class="header">The Chat Room</div>
-    <div class="parent-wrapper">
-      <div class="side-menu">
-        <div class="palette-selector">
-          <div class="swatch one" onclick="lightmode()"></div>
-          <div class="swatch two" onclick="darkmode()"></div>
-        </div>
+    <div class="parent-wrapper ">
+      <div class="side-menu lightmodeColor">
+          <div class="swatch two" onclick="toggleDarkLightMode()"></div>
+          <p>Current users online:</p>
+          <div class="online-users-list"></div>
       </div>
-      <div class="wrapper">
+      <div class="wrapper lightmodeColor">
         <div class="wrapper-inner">
           <div class="message-area">
-            <!-- <div class="wrapper-message">
-            <div class="username you">you</div>
-              <img
-                class="image"
-                src="aquarius.png"
-                onclick="window.open(this.src, '_blank');"
-              />
-          </div> -->
         </div>
         </div>
         <div class="typing-ui">

@@ -6,60 +6,50 @@ const form = document.querySelector(".typing-ui .typing-box");
 const divContainer = document.getElementsByClassName("message-area")[0];
 const imgPreview = document.getElementsByClassName("image-preview");
 const sendImage = document.querySelector(".send-button");
-const dropRegion = document.querySelector(".wrapper");
+const dropRegion = document.getElementsByClassName("wrapper")[0];
 const imagePreviewRegion = document.getElementsByClassName("image-preview")[0];
 const wrapperMessage = document.getElementsByClassName("wrapper-message")[0];
+const swatch = document.getElementsByClassName("swatch")[0];
+const onlineUsersList = document.getElementsByClassName("online-users-list")[0];
+const menu = document.getElementsByClassName("side-menu")[0];
+let isDark = false;
+let sendButtonSource = document.getElementsByClassName("send-button")[0];
 
-const wrapperAfter = window
-  .getComputedStyle(document.querySelector(".wrapper"), ":after")
-  .getPropertyValue("backgroundImage");
+//toggle dark/light mode ---------------------------------
 
-//change background
+const toggleDarkLightMode = () => {
+  if (!isDark) {
+    swatch.classList.remove("two");
+    swatch.classList.add("one");
+    dropRegion.classList.remove("lightmodeColor");
+    dropRegion.classList.add("darkmodeColor");
+    menu.classList.remove("lightmodeColor");
+    menu.classList.add("darkmodeColor");
+    sendButtonSource.src = "send-white.svg";
+    darkmode();
+    isDark = true;
+  } else {
+    swatch.classList.remove("one");
+    swatch.classList.add("two");
+    dropRegion.classList.remove("darkmodeColor");
+    dropRegion.classList.add("lightmodeColor");
+    menu.classList.remove("darkmodeColor");
+    menu.classList.add("lightmodeColor");
+    sendButtonSource.src = "send.svg";
+    lightmode();
+    isDark = false;
+  }
+};
+
+// function of dark and light mode -----------------------
 const lightmode = () => {
-  document.body.style.background = `linear-gradient(
-    217deg,
-    rgba(248, 223, 190, 0.8),
-    rgba(218, 218, 218, 0) 70.71%
-  ),
-  linear-gradient(
-    127deg,
-    rgba(238, 188, 227, 0.8),
-    rgba(250, 206, 156, 0) 70.71%
-  ),
-  linear-gradient(
-    336deg,
-    rgba(154, 242, 253, 0.8),
-    rgba(154, 242, 253, 0) 70.71%
-  )`;
-  wrapperAfter = `
-  linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.5),
-    rgba(255, 255, 255, 0) 100%
-  )`;
+  document.body.classList.remove("trigger");
+  dropRegion.classList.remove("toggledClassNightMode");
 };
 
 function darkmode() {
-  document.body.style.backgroundImage = `linear-gradient( 
-    217deg, 
-    rgba(11, 10, 9, 0.8), 
-    rgba(218, 218, 218, 0) 70.71%
-   ), 
-    linear-gradient( 
-      27deg, 
-      rgba(81, 0, 63, 0.8), 
-      rgba(250, 206, 156, 0) 70.71% 
-   ), 
-    linear-gradient( 
-      336deg, 
-      rgba(10, 0, 77, 0.8), 
-      rgba(183, 242, 250, 0) 70.71% )`;
-  wrapperAfter = `
-linear-gradient(
-  45deg,
-  rgba(0, 0, 0, 0.5),
-  rgba(0, 0, 0, 0) 100%
-)`;
+  document.body.classList.add("trigger");
+  dropRegion.classList.add("toggledClassNightMode");
 }
 
 //start of drag and drop feature ---------------------------
@@ -146,21 +136,29 @@ function validateImage(image) {
   return true;
 }
 let imageFile = [];
+
+function remove(el) {
+  el.remove();
+}
+
 function previewAnduploadImage(image) {
-  img = document.createElement("img");
-  //set up the functionality
-  img.className = "prepped-image";
-  img.onclick = function () {
-    imagePreviewRegion.removeChild(this);
-  };
-  imagePreviewRegion.appendChild(img);
+  // const imgElement = document.createElement("img");
+  // //set up the functionality
+  // imgElement.className = "prepped-image";
+  // imgElement.onclick = function () {
+  //   imagePreviewRegion.removeChild(this);
+  // };
+
+  // imagePreviewRegion.appendChild(imgElement);
+
   var reader = new FileReader();
+
   reader.onload = function (e) {
-    img.src = e.target.result;
+    // imgElement.src = e.target.result;
+    imagePreviewRegion.innerHTML += `
+    <img class="prepped-image" src="${e.target.result}" onClick="removePreview(this)"></img>
+    `;
     imageFile.push(e.target.result); //-----------
-    // socket.emit("image", imageFile);
-    // console.log(imageFile);
-    // imagePreviewRegion.innerHTML = "";
   };
   reader.readAsDataURL(image);
 }
@@ -219,9 +217,14 @@ socket.on("broadcast message", ({ msg, id }) => {
     `;
 });
 
-socket.on("displayDisconnectedUser", (id) => {
+socket.on("displayDisconnectedUser", ({ id, idsGiven }) => {
   divContainer.innerHTML += `
     <div class="userBroadcastStatus"> ${id} has left </div>
+    `;
+  onlineUsersList.innerHTML = "";
+  for (let i = 0; i < idsGiven.length; i++)
+    onlineUsersList.innerHTML += `
+    <div class="online-user ${idsGiven[i]}"> ${idsGiven[i]} </div>
     `;
 });
 
@@ -231,6 +234,13 @@ socket.on("displayConnectedUser", ({ id, idsGiven }) => {
       <div class="userBroadcastStatus"> ${id} has joined </div>
       `;
   }
+
+  //better to just clear it and make a new list compared to finding and removing
+  onlineUsersList.innerHTML = "";
+  for (let i = 0; i < idsGiven.length; i++)
+    onlineUsersList.innerHTML += `
+  <div class="online-user ${idsGiven[i]}"> ${idsGiven[i]} </div>
+  `;
 });
 
 socket.on("send image", ({ img, id }) => {
